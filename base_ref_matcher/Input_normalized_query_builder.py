@@ -1,4 +1,7 @@
 # -*- coding: UTF-8 -*-
+
+__author__ = "Behnam Ghavimi"
+
 import bibtexparser
 import glob, os
 import string

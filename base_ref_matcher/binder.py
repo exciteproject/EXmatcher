@@ -1,4 +1,7 @@
 # -*- coding: UTF-8 -*-
+
+__author__ = "Behnam Ghavimi"
+
 import Input_normalized_query_builder
 import urllib
 from urllib import urlencode, urlopen
