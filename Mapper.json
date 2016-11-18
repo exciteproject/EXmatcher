@@ -1,0 +1,44 @@
+{
+  "add_query":
+  [
+    {
+      "query_name": "our_new_query",
+      "source_field": "author_name",
+      "query_fields":
+      [
+        {
+          "query_field": "person_author_normalized_str_mv",
+          "fuzzy": 0.5
+        }
+      ]
+    },
+
+    {
+      "query_name": "title",
+      "source_field": "norm_title_str",
+      "query_fields":
+      [
+        {
+          "query_field": "norm_title_str",
+          "fuzzy": 0.5
+        },
+        {
+          "query_field": "norm_title_full_str",
+          "fuzzy": 0.5
+        }
+      ],
+      "operator": " OR "
+    }
+  ],
+  "combine_query":
+  [
+    {
+      "name": "title_our_new_query",
+      "query_names": ["title","our_new_query"]
+    }
+  ],
+  "queries_to_ask":
+  [
+    "title_our_new_query"
+  ]
+}
