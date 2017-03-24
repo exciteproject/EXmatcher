@@ -8,7 +8,7 @@
       [
         {
           "query_field": "person_author_normalized_str_mv",
-          "fuzzy": 0.5
+          "fuzzy": 0.8
         }
       ]
     },
@@ -20,21 +20,33 @@
       [
         {
           "query_field": "norm_title_str",
-          "fuzzy": 0.5
+          "fuzzy": 0.75
         },
         {
           "query_field": "norm_title_full_str",
-          "fuzzy": 0.5
+          "fuzzy": 0.75
         }
       ],
       "operator": " OR "
+    },
+
+    {
+      "query_name": "year",
+      "source_field": "year_test",
+      "query_fields":
+      [
+        {
+          "query_field": "search_date_str_mv"
+        }
+      ]
     }
+
   ],
   "combine_query":
   [
     {
       "name": "title_our_new_query",
-      "query_names": ["title","our_new_query"]
+      "query_names": ["title","our_new_query","year"]
     }
   ],
   "queries_to_ask":

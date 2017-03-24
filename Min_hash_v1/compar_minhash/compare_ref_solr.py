@@ -12,7 +12,7 @@ list_ref_h = pd.read_csv("./data_minhash/list_ref_hashes_with_correction.csv")
 next_prime = 4294967311
 
 #for security reason, the url is not mentioned completely
-solr_url = "url_should_be_mention_here/solr/solr_query.php?do=normal&"
+solr_url = "url_should_be_mention_here/solr_query.php?do=normal&"
 finder = SOLRMappingQueryBuilder("./Mapper.json")
 
 
