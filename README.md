@@ -14,7 +14,7 @@ items in publications database. Till now two different strategies are impelement
 	<br />(title:aspirin'\~'0.5) AND (author:lewis OR author:blume) AND (Year:1983)
 	<br />The tilda ('\~') represents 'Levenshtein-distance'.
 	
-## Minhash Approach
+## Algorithm based on Minhash
 1. Generate min hash values for titles in Sowiport (once).
 2. Generate min hash values for extracted titles of reference string .
 3. Filter items in sowiport by extracted year and authors’ names of reference string.
