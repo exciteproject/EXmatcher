@@ -22,6 +22,9 @@ items in publications database. Till now two different strategies are impelement
 5. Rank the sowiport items regarding their Jaccard score.
 6. The match item to the reference string is the top item in the ranking which is higher than our predefined threshold.
 
+<br />How to generate 'Min-hash' value (We describe it in the following example):
+<br />![picture alt](https://s27.postimg.org/7ns6q7j4z/minhashval.png "Min-hash value")
+
 
 
  
