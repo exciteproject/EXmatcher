@@ -25,6 +25,13 @@ items in publications database. Till now two different strategies are impelement
 <br />How to generate 'Min-hash' value (We describe it in the following example):
 <br />![picture alt](https://s27.postimg.org/7ns6q7j4z/minhashval.png "Min-hash value")
 
-
-
+## Run algorithms:
+### SOLR:
+1. Generat bibtex file for reference strings (you can use this simple code:/Extra_tool/Bibtex_generator/Cermin_bibtex.java)
+2. Solr: run  binder_2.main(Source_dir, Destination_dir)
+### Minhash:
+1. Generat bibtex file for reference strings (you can use this simple code:/Extra_tool/Bibtex_generator/Cermin_bibtex.java)
+2. Use '/Min_hash_v1/solr_hasher/minhash_title_multi.py' for making minhash value for titles in SOLR
+3. Use '/Min_hash_v1/ref_hasher/Genreate_ref_hashe_title.py' for making minhash value for extracted titles of reference strings
+4. Compare Reference strings and items in DB with '/Combination_Solr_Minhash/Hash_Comparision.py'
  
