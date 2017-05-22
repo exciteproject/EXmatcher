@@ -57,8 +57,7 @@ def main(itemref):
         total = t1 - t0
         print(total)
 
-        print(result_match)
-        #output_new_rec_list
+        return (result_match)
 
 #=====example input=============
 #input_dict={}
@@ -69,4 +68,4 @@ def main(itemref):
 #input_dict['author']="King, A."
 #=============================
 input_dict={}
-main(input_dict)
+print(main(input_dict))
