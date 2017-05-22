@@ -29,17 +29,20 @@ items in publications database. Till now two different strategies are impelement
 ### SOLR:
 1. Put extracted meta data from a reference string in a dictionary like:
 
-    input_dict={}
-    input_dict['ID']='ID102'
-    input_dict['title']='Outline of a Practical Theory of Football Violence'
-    input_dict['year']='1995'
-    input_dict['ENTRYTYPE']="article"
-    input_dict['author']="King, A."
+		- input_dict={}
+		- input_dict['ID']='ID102'
+		- input_dict['title']='Outline of a Practical Theory of Football Violence'
+		- input_dict['year']='1995'
+		- input_dict['ENTRYTYPE']="article"
+		- input_dict['author']="King, A."
 	
 2. Run binder.main(input_dict)
 3. Output will be a dictionary like:
 
-    {'Cit_id': 'ID102', 'Sowiport_id': 'csa-assia-56049'}
+		- {
+		- 'Cit_id': 'ID102', 
+		- 'Sowiport_id': 'csa-assia-56049'
+		- }
 	
 ### Minhash:
 1. Generat bibtex file for reference strings (you can use this simple code:/Extra_tool/Bibtex_generator/Cermin_bibtex.java)
