@@ -30,20 +30,20 @@ items in publication databases. Till now two different strategies are implemente
 1. Put extracted meta data from a reference string in a dictionary like:
 
 		- input_dict={}
-		- input_dict['ID']='ID102'
-		- input_dict['title']='Outline of a Practical Theory of Football Violence'
-		- input_dict['year']='1995'
+		- input_dict['ID']= 7769
+		- input_dict['title']= ["BABBIE"," E.R."]
+		- input_dict['year']= [" 1979",2001]
 		- input_dict['ENTRYTYPE']="article"
-		- input_dict['author']="King, A."
+		- input_dict['author']= "The Practice of Social Reserch"
 	
 2. Run binder.main(input_dict)
-3. Output will be a dictionary like:
+3. Output will be a dictionary (as match_id in Sowiport) like:
 
 		- {
-		- 'Cit_id': 'ID102', 
-		- 'Sowiport_id': 'csa-assia-56049'
+		- 'Cit_id': '7769', 
+		- 'Sowiport_id': 'gesis-bib-101302'
 		- }
-	
+(and also a query which has sent to solr for retreiving the result)	
 ### Minhash:
 1. Generate bibtex file for reference strings (you can use this simple code:/Extra_tool/Bibtex_generator/Cermin_bibtex.java)
 2. Use '/Min_hash_v1/solr_hasher/minhash_title_multi.py' for making minhash value for titles in SOLR

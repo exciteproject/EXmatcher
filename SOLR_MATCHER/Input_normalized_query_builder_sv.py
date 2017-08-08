@@ -8,7 +8,7 @@ import string
 import re
 
 
-def bibtex_parser(Path_source='./'):
+def bibtex_parser(Path_source='/EXCITE/scratch/refs/download-vufind-0-50k'):
     list_of_refs = []
 
     list_of_files=listoffile_retriver(Path_source)
@@ -43,6 +43,7 @@ def listrefinafile(filename,Path_source):
 def normauthors_alg(item):
     normalizedtitle = "".join(l for l in item if l not in string.punctuation)
     normalizedtitle = normalizedtitle.lower()
+    normalizedtitle= normalizedtitle.strip()
     normalizedtitle = normalizedtitle.replace(" ", "")
 
     normalizedtitle=normalizedtitle.replace(u'ü', '')
@@ -52,11 +53,18 @@ def normauthors_alg(item):
     normalizedtitle =''.join([i if ord(i) < 128 else '' for i in normalizedtitle])
     return normalizedtitle
 
+#def filteryear(itemyear):
+#        year=''
+#        match = re.match(r'.*([1-3][0-9]{3})', itemyear)
+#        if match is not None:
+#            year =match.group(1)
+#        return year
 
-def filteryear(itemyear):
+
+def filteryear2(itemyear):
     year = ''
     try:
-        if 1000<float(itemyear) and 3000>float(itemyear):
+        if 1000<int(itemyear) and 3000>int(itemyear):
             year=itemyear
     except:
         pass
@@ -68,23 +76,27 @@ def Author_title(item):
     normalizedtitle = normalizedtitle.lower()
 
     normalizedtitle = normalizedtitle.replace(" ", "")
-    normalizedtitle=normalizedtitle.replace(u'ü', 'u')
-    normalizedtitle=normalizedtitle.replace(u'ä', 'a')
-    normalizedtitle=normalizedtitle.replace(u'ö', 'o')
-    normalizedtitle=normalizedtitle.replace(u'ß', 'ss')
+    normalizedtitle=normalizedtitle.replace('ü', 'u')
+    normalizedtitle=normalizedtitle.replace('ä', 'a')
+    normalizedtitle=normalizedtitle.replace('ö', 'o')
+    normalizedtitle=normalizedtitle.replace('ß', 'ss')
 
     normalizedtitle =''.join([i if ord(i) < 128 else '' for i in normalizedtitle])
 
     autors = item['author'].split(',')
     norm_authors=[]
     for item1 in autors:
-        norm_authors.append(normauthors_alg(item1))
+        norm_item_iter=normauthors_alg(item1)
+        if len(norm_item_iter)>1:
+            norm_authors.append(norm_item_iter)
 
     Year_item=item['year']
     listofyear=[]
     for itemyis in Year_item.split(','):
         for itemyis_s in itemyis.split(' '):
-            listofyear.append(filteryear(itemyis_s))
+            item_iter_year=filteryear2(itemyis_s)
+            if item_iter_year!='':
+                listofyear.append(item_iter_year)
 
     return normalizedtitle, norm_authors, item['ID'], listofyear
 

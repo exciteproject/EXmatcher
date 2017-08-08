@@ -7,8 +7,7 @@
       "query_fields":
       [
         {
-          "query_field": "person_author_normalized_str_mv",
-          "fuzzy": 0.8
+          "query_field": "person_author_normalized_str_mv"
         }
       ]
     },
@@ -20,11 +19,11 @@
       [
         {
           "query_field": "norm_title_str",
-          "fuzzy": 0.75
+          "fuzzy":0.8
         },
         {
           "query_field": "norm_title_full_str",
-          "fuzzy": 0.75
+          "fuzzy":0.8
         }
       ],
       "operator": " OR "
@@ -36,11 +35,10 @@
       "query_fields":
       [
         {
-          "query_field": "search_date_str_mv"
+          "query_field": "norm_publishDate_str"
         }
       ]
     }
-
   ],
   "combine_query":
   [
