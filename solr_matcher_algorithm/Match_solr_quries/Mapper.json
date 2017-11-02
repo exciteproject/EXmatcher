@@ -1,0 +1,111 @@
+{
+  "add_query":
+  [
+    {
+      "query_name": "author_q",
+      "source_field": "author",
+      "query_fields":
+      [
+        {
+          "query_field": "person_author_normalized_str_mv"
+        }
+      ]
+    },
+
+    {
+      "query_name": "title_q",
+      "source_field": "title",
+      "query_fields":
+      [
+        {
+          "query_field": "norm_title_str",
+          "fuzzy":0.7
+        },
+        {
+          "query_field": "norm_title_full_str",
+          "fuzzy":0.7
+        }
+      ],
+      "operator": " OR "
+    },
+
+    {
+      "query_name": "year_q",
+      "source_field": "year",
+      "query_fields":
+      [
+        {
+          "query_field": "norm_publishDate_str"
+        }
+      ]
+    },
+    
+    {
+      "query_name": "pages_q",
+      "source_field": "pages",
+      "query_fields":
+      [
+        {
+          "query_field": "norm_pagerange_str"
+        }
+      ]
+    },
+    
+    {
+      "query_name": "doi_q",
+      "source_field": "doi",
+      "query_fields":
+      [
+        {
+          "query_field": "recorddoi_str_mv"
+        }
+      ]
+    },
+
+    {
+      "query_name": "volume_q",
+      "source_field": "number",
+      "query_fields":
+      [
+        {
+          "query_field": "norm_volume_str"
+        },
+        {
+          "query_field": "norm_issue_str"
+        }
+      ],
+      "operator": " OR "
+    },
+
+    {
+      "query_name": "journal_q",
+      "source_field": "journal",
+      "query_fields":
+      [
+        {
+          "query_field": "journal_title_txt_mv",
+          "fuzzy":3
+        },
+        {
+          "query_field": "journal_short_txt_mv",
+          "fuzzy":3
+        },
+        {
+          "query_field": "zsabk_str"
+        }
+      ],
+      "operator": " OR "
+    }
+  ],
+  "combine_query":
+  [
+    {
+      "name": "title_our_new_query",
+      "query_names": ["title_q","author_q","year_q","pages_q","doi_q","volume_q","journal_q"]
+    }
+  ],
+  "queries_to_ask":
+  [
+    "title_our_new_query"
+  ]
+}
