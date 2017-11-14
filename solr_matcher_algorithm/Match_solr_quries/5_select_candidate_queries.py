@@ -107,4 +107,4 @@ for item in dictionary_query["used_keys"]:
             final_temp_tuples.append(str(item1).replace("(","").replace(")","").replace(" ", "").split(","))
     dictionary_query.loc[dictionary_query[dictionary_query["used_keys"]==item].iloc[0].name,"combination"]=final_temp_tuples
 
-dictionary_query.to_csv("Data/Dictionary_query/precision_"+str(precision_thershold).replace(".","")+"_dict_query.csv",index=False, encoding='utf-8')
+dictionary_query.to_csv("../../matcher_algorithm/precision_"+str(precision_thershold).replace(".","")+"_dict_query.csv",index=False, encoding='utf-8')
