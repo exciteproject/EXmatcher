@@ -256,7 +256,7 @@ def result_for_match(bibtex_str):
         for item in list_hopefull_dict:
                     match_id="not_match"
                     keys_flag="none"
-                    result_id,url_query=result_solr(list_hopefull_dict[0])
+                    result_id,url_query=result_solr(item)
                     if (result_id!="not_match" and result_id!=""):
                             keys_flag=(",".join(item.keys()))
                             match_id=(result_id)
