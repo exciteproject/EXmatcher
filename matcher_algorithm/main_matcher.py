@@ -19,7 +19,7 @@ r_dict_tags={"journal":"journal","doi":"doi","norm_number":"number","norm_year":
 
 solr_url = ""
 finder = SOLRMappingQueryBuilder("./Mapper.json")
-solr_query = {'fl': 'id', 'rows': '1', 'start': '0', 'format': 'python','api_key':''}
+solr_query = {'fl': 'id', 'rows': '1', 'start': '0', 'wt': 'python','api_key':''}
 
 
 def normalizeinput_title(titlestr):
@@ -103,8 +103,8 @@ def bib_pars(item1):
     bib_database = bibtexparser.loads(item1)
     return (bib_database.entries[0])
 
-
-def preprocessed_data(bibtex_str):
+#this function has bug but not remove as a back-up code - temporary
+def preprocessed_data_old(bibtex_str):
     dict_bib_parsed = bib_pars(bibtex_str)
     dict_bib_keys = dict_bib_parsed.keys()
 
@@ -177,6 +177,91 @@ def preprocessed_data(bibtex_str):
     return (temprec)
 
 
+def normalizeinput_year_new(Year_item):
+    Year_item = str(Year_item)
+    listofyear = []
+    listof_replace = re.findall('[a-zA-Z]', Year_item)
+    listof_replace = list(set(listof_replace))
+    for item in listof_replace:
+        Year_item = Year_item.replace(item, " ")
+    for itemyis in Year_item.split(','):
+        for itemyis_s in itemyis.split(' '):
+            item_iter_year = filteryear(itemyis_s)
+            if item_iter_year != '':
+                listofyear.append(item_iter_year.replace(" ",""))
+    return listofyear    
+    
+def preprocessed_data(bibtex_str):
+    dict_bib_parsed = bib_pars(bibtex_str)
+    dict_bib_keys = dict_bib_parsed.keys()
+
+    temprec = {}
+    for item in dict_bib_keys:
+        numberfield_data = ""
+        volumefield_data = ""
+        if item == "ID" or item == "ENTRYTYPE":
+            pass
+        elif item == "year":
+            yearfield_data = dict_bib_parsed["year"]
+            concate_years = normalizeinput_year_new(yearfield_data)
+            # --
+            if (len(concate_years) != 0):
+                temprec["norm_year"] = concate_years
+        elif item == "author":
+            authorfield_data = dict_bib_parsed["author"]
+            concate_author = normalizeinput_author(authorfield_data)
+            # --
+            if (len(concate_author) != 0):
+                temprec["norm_author"] = concate_author
+        elif item == "title":
+            titlefield_data = dict_bib_parsed["title"]
+            concate_title = ""
+            concate_title = normalizeinput_title(titlefield_data)
+            # --
+            if (concate_title.strip() != ""):
+                temprec["norm_title"] = concate_title
+        elif item == "pages":
+            pagesfield_data = str(dict_bib_parsed["pages"]).replace("--", "-")
+            # --
+            if ('-' in pagesfield_data):
+                newlist_pages = []
+                for item_page in pagesfield_data.split(','):
+                    temp_page_item = ""
+                    for token_item in item_page:
+                        if token_item.isdigit() or token_item == "-":
+                            temp_page_item += token_item
+                    temp_page_item=temp_page_item.replace("--","-")
+                    if temp_page_item[0]=="-":
+                        temp_page_item=temp_page_item[1:]
+                    if len(list(set(temp_page_item)))>1 and '-' in temp_page_item:
+                        newlist_pages.append(temp_page_item)
+                temprec["norm_pages"] = newlist_pages        
+                
+        elif item == "journal":
+            # --
+            temprec["journal"] = dict_bib_parsed["journal"]
+
+        elif item == "volume":
+            volumefield_data = re.findall(r'\d+',dict_bib_parsed["volume"])
+
+        elif item == "number":
+            numberfield_data = re.findall(r'\d+',dict_bib_parsed["number"])
+
+        elif item == "doi":
+            temprec["doi"] = dict_bib_parsed["doi"]
+
+        if numberfield_data != "" or volumefield_data != "":
+            if numberfield_data != "":
+                if volumefield_data != "":
+                    allnumber = str(numberfield_data) + "," + str(volumefield_data)
+                else:
+                    allnumber = str(numberfield_data)
+            else:
+                allnumber = str(volumefield_data)
+            allnumber = norm_number(allnumber)
+            # --
+            temprec["norm_number"] = allnumber.split(",")
+    return (temprec)
 
 def dic_query_qen(item_ref_combi,dict_ref_parsed):
     temp={}
