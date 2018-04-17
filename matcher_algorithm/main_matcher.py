@@ -1,4 +1,7 @@
 # -*- coding: UTF-8 -*-
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 import pandas as pd
 import bibtexparser
 import itertools
@@ -134,7 +137,19 @@ def preprocessed_data(bibtex_str):
             pagesfield_data = str(dict_bib_parsed["pages"]).replace("--", "-")
             # --
             if ('-' in pagesfield_data):
-                temprec["norm_pages"] = pagesfield_data
+                newlist_pages = []
+                for item_page in pagesfield_data.split(','):
+                    temp_page_item = ""
+                    for token_item in item_page:
+                        if token_item.isdigit() or token_item == "-":
+                            temp_page_item += token_item
+                    temp_page_item=temp_page_item.replace("--","-")
+                    if temp_page_item[0]=="-":
+                        temp_page_item=temp_page_item[1:]
+                    if len(list(set(temp_page_item)))>1 and '-' in temp_page_item:
+                        newlist_pages.append(temp_page_item)
+                temprec["norm_pages"] = newlist_pages        
+                
         elif item == "journal":
             # --
             temprec["journal"] = dict_bib_parsed["journal"]
@@ -232,13 +247,14 @@ def hopefull_dict(bibtex_str):
     for item in list_keys:
         new_keys.append(r_dict_tags[item])
     new_keys.sort()
-    rec_ref_keys=str(new_keys).replace("\'","").replace("[","").replace("]","").replace(" ","")
-    rec_ref_combi=list_combintation["combination_keys"][rec_ref_keys]
-    rec_ref_combi.sort(key=len,reverse=True)
-    list_hopefull_dict=[]
-    for item in rec_ref_combi:
-        dict_query_solr=dic_query_qen(item,dict_ref_parsed)
-        list_hopefull_dict.append(dict_query_solr)
+    list_hopefull_dict = []
+    if new_keys:
+        rec_ref_keys=str(new_keys).replace("\'","").replace("[","").replace("]","").replace(" ","")
+        rec_ref_combi=list_combintation["combination_keys"][rec_ref_keys]
+        rec_ref_combi.sort(key=len, reverse=True)
+        for item in rec_ref_combi:
+            dict_query_solr=dic_query_qen(item,dict_ref_parsed)
+            list_hopefull_dict.append(dict_query_solr)
     return (list_hopefull_dict)
 
 
@@ -262,7 +278,8 @@ def result_for_match(bibtex_str):
                             match_id=(result_id)
                             break;
     except Exception as e:
-        match_id="error"
+        #match_id="error"
+        match_id = "not_match"
     return match_id,keys_flag
 
 
