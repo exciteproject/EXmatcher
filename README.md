@@ -42,7 +42,7 @@ from 3_1_features_extraction_for_train_model import featuers_labels_generator_fo
 
 featuers_labels_generator_for_training()
 ```
-The code save a csv file for training step. The file contains three columns: 1- ref_id, 2-features, and 3. lable (match/not match)
+The code saves a csv file for training a model. The file contains three columns: 1- ref_id, 2-feature, and 3. lable (match/not match)
 
 ### Train model 
 #### SVM
