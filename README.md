@@ -10,7 +10,7 @@ The aim of EXCITE project is the extraction of references out of PDFs, which wil
  
 In the citation matching task, there are a set of extracted references from PDFs and each time our algorithm takes one of these references and compares it with bibliographic records in a database to find corresponding items. For having good accuracy and at the same time, having fewer numbers of comparision, we use the combinatation SOLR indexing and a classifier (SVM/rfc).
 The algorithm generates a set of queries for each extracted reference and afterward sends them to SOLR for reteriving some blocks. In the next step, the algorithm geneerates some features out of retrieved items and the extracted reference (string and segments).
-In the final step, a trained classifier(SVM or rfc) will be applied on the extracted features to find out if a retived item is matched with the reference or not (and also a probility for each class(match or not_match).
+In the final step, a trained classifier(SVM or rfc) will be applied on the extracted features to find out if a retived item is matched with the reference or not (and also a probility for each class(match or not_match)).
 
 !["Figure1. An overview of our approach"](https://raw.githubusercontent.com/exciteproject/ref_matcher/master/picreadme/overview.png)
 
