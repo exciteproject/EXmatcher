@@ -23,7 +23,9 @@ from 1_fiitabels import fill_tables_for_refiddict_refid_match
 from 2_remove_dublicate import remove_dublicate
 from 4_final_result_match import final_result
 
-# 1-Generate different queres (which return result with presicion higher that 0.6) for each reference and 2- send to SOLR api
+# 1.1-Generate different queres (which return result with presicion higher that 0.6) for each reference 
+#and
+#1.2- send to SOLR api
 fill_tables_for_refiddict_refid_match()
 
 # 2- remove duplicates from retrieved items by SOLR
