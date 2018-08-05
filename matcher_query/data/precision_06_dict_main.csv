@@ -1,0 +1,81 @@
+index,avg_precision,avg_recall,avg_tp,avg_fp
+"(number, title, year)",1.0,0.8407082000130001,16.6,0.0
+"(author, number, title, year)",1.0,0.8194259621009999,16.2,0.0
+"(pages, title)",1.0,0.695013267494,13.2,0.0
+"(author, pages, title)",1.0,0.691371394172,13.0,0.0
+"(pages, title, year)",1.0,0.707672131111,12.7,0.0
+"(author, pages, title, year)",1.0,0.6940114709849999,12.5,0.0
+"(author, number, pages, year)",1.0,0.6985066979800001,11.1,0.0
+"(number, pages, title)",1.0,0.701489356055,11.0,0.0
+"(author, number, pages, title)",1.0,0.696029501544,10.8,0.0
+"(number, pages, title, year)",1.0,0.704369753054,10.6,0.0
+"(author, number, pages, title, year)",1.0,0.703607859532,10.3,0.0
+"(doi,)",1.0,1.0,1.5,0.0
+"(doi, number)",1.0,1.0,1.0,0.0
+"(doi, title)",1.0,1.0,1.0,0.0
+"(author, doi)",1.0,1.0,1.0,0.0
+"(author, doi, number)",1.0,1.0,1.0,0.0
+"(doi, number, title, year)",1.0,0.75,1.0,0.0
+"(author, doi, pages)",1.0,0.5,1.0,0.0
+"(author, doi, pages, title, year)",1.0,0.5,1.0,0.0
+"(author, doi, number, title)",1.0,1.0,0.75,0.0
+"(doi, number, title)",1.0,1.0,0.75,0.0
+"(author, doi, title)",1.0,1.0,0.75,0.0
+"(author, doi, number, year)",1.0,0.75,0.666666666667,0.0
+"(doi, pages, title)",1.0,0.75,0.666666666667,0.0
+"(author, doi, number, pages)",1.0,0.75,0.666666666667,0.0
+"(doi, number, pages)",1.0,0.75,0.666666666667,0.0
+"(author, doi, pages, title)",1.0,0.75,0.666666666667,0.0
+"(doi, number, pages, title)",1.0,0.666666666667,0.666666666667,0.0
+"(doi, year)",1.0,0.666666666667,0.666666666667,0.0
+"(doi, pages, year)",1.0,0.666666666667,0.666666666667,0.0
+"(doi, number, pages, title, year)",1.0,0.5,0.666666666667,0.0
+"(author, doi, year)",1.0,0.5,0.666666666667,0.0
+"(doi, pages, title, year)",1.0,0.5,0.666666666667,0.0
+"(author, doi, pages, year)",1.0,0.666666666667,0.5,0.0
+"(doi, pages)",1.0,0.666666666667,0.5,0.0
+"(doi, title, year)",1.0,0.666666666667,0.5,0.0
+"(author, doi, number, pages, title)",1.0,0.666666666667,0.5,0.0
+"(author, doi, number, pages, title, year)",1.0,0.666666666667,0.5,0.0
+"(doi, number, pages, year)",1.0,0.666666666667,0.5,0.0
+"(author, doi, number, title, year)",1.0,0.666666666667,0.5,0.0
+"(author, doi, title, year)",1.0,0.666666666667,0.5,0.0
+"(author, doi, number, pages, year)",1.0,0.666666666667,0.5,0.0
+"(doi, number, year)",1.0,0.666666666667,0.5,0.0
+"(author, journal, number, year)",1.0,0.0238596491228,0.4,0.0
+"(journal, number, title, year)",1.0,0.023669467787099996,0.4,0.0
+"(journal, title, year)",1.0,0.021382275132299997,0.4,0.0
+"(author, journal, number, title)",1.0,0.0210909090909,0.4,0.0
+"(journal, number, title)",1.0,0.0210818713451,0.4,0.0
+"(author, journal, number, title, year)",1.0,0.018000000000000002,0.4,0.0
+"(author, journal, year)",1.0,0.0177222371948,0.4,0.0
+"(journal, title)",1.0,0.0175183241713,0.4,0.0
+"(author, journal, title)",1.0,0.0169162826421,0.4,0.0
+"(author, journal, title, year)",1.0,0.016,0.4,0.0
+"(journal, number, pages, title, year)",1.0,0.0280555555556,0.3,0.0
+"(journal, pages, year)",1.0,0.0279166666667,0.3,0.0
+"(journal, pages, title, year)",1.0,0.0258823529412,0.3,0.0
+"(author, journal, pages, title, year)",1.0,0.025694444444400003,0.3,0.0
+"(journal, number, pages, year)",1.0,0.025555555555599997,0.3,0.0
+"(author, journal, number, pages, title, year)",1.0,0.0250534188034,0.3,0.0
+"(journal, number, pages, title)",1.0,0.0225274725275,0.3,0.0
+"(author, journal, pages)",1.0,0.0220512820513,0.3,0.0
+"(author, journal, number, pages, year)",1.0,0.021513157894700003,0.3,0.0
+"(author, journal, pages, title)",1.0,0.021145510835899998,0.3,0.0
+"(journal, pages, title)",1.0,0.0210256410256,0.3,0.0
+"(author, journal, number, pages, title)",1.0,0.0204656862745,0.3,0.0
+"(author, journal, number, pages)",1.0,0.0188378185282,0.3,0.0
+"(author, journal, pages, year)",1.0,0.0186335403727,0.3,0.0
+"(journal, pages)",1.0,0.018354978355,0.3,0.0
+"(journal, number, pages)",1.0,0.0159074155978,0.3,0.0
+"(author, number, title)",0.995,0.8396149804299999,16.6,0.1
+"(author, title, year)",0.9945588235289999,0.880093822773,33.8,0.2
+"(author, number, pages)",0.9928571428569999,0.7406905130470001,11.5,0.1
+"(author, pages, year)",0.989974937343,0.737227591036,13.6,0.2
+"(number, title)",0.98918128655,0.85730994152,17.1,0.2
+"(title, year)",0.961439608554,0.892763768553,34.1,1.4
+"(author, title)",0.9089143615009999,0.8654512976890001,32.8,3.2
+"(author, pages)",0.906688311688,0.751458903125,14.0,1.2
+"(author, number, year)",0.8537685680329999,0.849269530349,15.9,3.0
+"(number, pages, year)",0.8328422965919999,0.7867445054950001,10.9,2.3
+"(title,)",0.796912206718,0.8876097348309999,30.9,7.8
