@@ -188,13 +188,15 @@ def result_for_match(json_input,ref_text_string):
     ref_text_string1=''.join(ch for ch in ref_text_string if ch not in exclude)
 
     list_of_result = []
+
+    if "title" not in list(json_input.keys()):
+        titlefield_data=ref_text_string
+        json_input["title"]=titlefield_data
+        titlefield_data = ''.join(ch for ch in titlefield_data if ch not in exclude)
+    if "year" not in list(json_input.keys()):
+        json_input["year"]=str(filteryear_new(ref_text_string))
+            
     if bool(json_input)==True:
-        if "title" not in list(json_input.keys()):
-            titlefield_data=ref_text_string
-            json_input["title"]=titlefield_data
-            titlefield_data = ''.join(ch for ch in titlefield_data if ch not in exclude)
-        if "year" not in list(json_input.keys()):
-            json_input["year"]=str(filteryear_new(ref_text_string))
         list_hopefull_dict = hopefull_dict(json_input)
         for item in list_hopefull_dict:
             match_id = "not_match"
