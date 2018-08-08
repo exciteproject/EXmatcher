@@ -202,7 +202,7 @@ def result_for_match(json_input,ref_text_string):
             match_id = "not_match"
             keys_flag = "none"
             if "title" in list(item.keys()):
-                thereshold_fuzzy = 0.6
+                thereshold_fuzzy =2.0
                 
                 lsofbis=[]
                 for itembis in get_bi(titlefield_data):
@@ -222,7 +222,7 @@ def result_for_match(json_input,ref_text_string):
                     list_of_result.append(
                         {"match_id": match_id, "keys_flag": keys_flag})
             else:
-                result_id, url_query = result_solr(item, thereshold_fuzzy=0.6)
+                result_id, url_query = result_solr(item, thereshold_fuzzy=2.0)
                 if (result_id != "not_match" and result_id != ""):
                     keys_flag = (",".join(item.keys()))
                     match_id = result_id

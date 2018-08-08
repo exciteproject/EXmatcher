@@ -66,9 +66,16 @@ class SOLRQueryBuilder(object):
                     # there are need single quotes with fuzzy
                     this_value_list = ['\"%s\"~%.1f' % (v, field_info["fuzzy"])
                                        for v in this_value_list]
-                this_value_list = ["%s:%s" % (
-                                       field_info["query_field"],
-                                       v) for v in this_value_list]
+                                       
+                if field_info["query_field"]=="norm_title_str" or field_info["query_field"]=="norm_title_full_str":
+                    this_value_list = ["%s:%s" % (
+                                        field_info["query_field"],
+                                        v.replace('"','')) for v in this_value_list]
+                else:
+                    this_value_list = ["%s:%s" % (
+                                        field_info["query_field"],
+                                        v) for v in this_value_list]
+                                        
                 if "operator" in field_info:
                     part = field_info["operator"].join(this_value_list)
                 else:

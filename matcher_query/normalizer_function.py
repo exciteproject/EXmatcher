@@ -51,6 +51,7 @@ def normalizeinput_title_new(titlestr):
         normalizedtitle = normalizedtitle.replace(u'ä', 'a')
         normalizedtitle = normalizedtitle.replace(u'ö', 'o')
         normalizedtitle = normalizedtitle.replace(u'ß', 'ss')
+        normalizedtitle=normalizedtitle.replace("é","")
         normalizedtitle = ''.join([i if ord(i) < 128 else '' for i in normalizedtitle])
         if (normalizedtitle.strip() != ""):
             final_result.append(normalizedtitle.strip())
