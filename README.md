@@ -16,7 +16,7 @@ In the final step, a trained classifier(SVM or rfc) will be applied on the extra
 
 
 ## Usage:
-At first, please edit "configfile.json" file to define SOLR and PSQl credential. After that, the code is ready to use. In the following, you can find that how "Cit-King" can be used:
+At first, please edit "configfile.json" file to define SOLR and PSQl credential. After that, the code is ready to use. In the following, you can find that how "EXMATCHER" can be used:
 
 ```python
 from 1_fiitabels import fill_tables_for_refiddict_refid_match
