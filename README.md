@@ -1,4 +1,4 @@
-# EXCITE Citation Linking (EXMATCHER)
+# EXCITE Citation Matching (EXMATCHER)
 
 ## General:
 This code is dedicated to the task of citation matching in [EXCITE](https://west.uni-koblenz.de/en/research/excite).
