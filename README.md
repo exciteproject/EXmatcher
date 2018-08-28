@@ -12,7 +12,7 @@ In the citation matching task, there are a set of extracted references from PDFs
 The algorithm generates a set of queries for each extracted reference and afterward sends these queries to SOLR for retrieving some blocks. In the next step, the algorithm generates some features out of retrieved items and the extracted reference (string and segments).
 In the final step, a trained classifier (SVM or RFC) will be applied on the extracted features to find out if a retrieved item is matched with the reference or not (and also a probability for each class (match or not_match)).
 
-!["Figure1. An overview of our approach"](https://raw.githubusercontent.com/exciteproject/ref_matcher/master/picreadme/overview.png)
+!["Figure1. An overview of our approach"](https://raw.githubusercontent.com/exciteproject/EXmatcher/master/picreadme/matchingoverveiw.png)
 
 
 ## Usage:
