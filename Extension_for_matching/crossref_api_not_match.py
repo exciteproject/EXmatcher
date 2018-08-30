@@ -47,7 +47,7 @@ def decode_utf8(var):
 :parameter login_data: List of psql login information like ["database", "user", "host", "password"]
 :parameter chunk_size: number of API calls, before temp results are saved
 """
-def crossref_via_database(login_data, chunk_size=1000):
+def crossref_via_database(login_data, e_mail, chunk_size=1000):
     try:
         conn = psycopg2.connect(dbname=login_data[0], user=login_data[1], host=login_data[2], password=login_data[3])
     except psycopg2.Error as e:
@@ -91,18 +91,18 @@ def crossref_via_database(login_data, chunk_size=1000):
         sql_dataframe = pd_psql.read_sql(sql, conn)
         print("offset old: ", offset, "offset new: ", str(offset + chunk_size), " total length: ", total_length)
         offset += chunk_size
-        crossref_api(login_data, sql_dataframe, chunk_size)
+        crossref_api(login_data, sql_dataframe, e_mail, chunk_size)
 
 
 # method called from crossref_via_database().
 # iterates over dataframe, calls Crossref-API with value in [ref_text] column.
 # stores result to psql
-def crossref_api(login_data, sql_dataframe, chunk_size):
+def crossref_api(login_data, sql_dataframe, e_mail, chunk_size):
     pd.options.mode.chained_assignment = None
     match_info = sql_dataframe
     sampledata = match_info[(match_info["match_id"]=="not_match") | (match_info["match_id"]=="error")]
     sampledata["crossref"] = np.nan
-    cr = Crossref(mailto = "name@email.org")
+    cr = Crossref(mailto = e_mail)
     i=0
 
     while True:
@@ -130,12 +130,12 @@ def crossref_api(login_data, sql_dataframe, chunk_size):
 
 # function reads csv files, parses and splits the JSON-like values and inserts the data to a postgresql db.
 # Parameters: list, which contains the command-line arguments passed to the script. Arguments should be the login credentials for DB access.
-def crossref_to_db(args, source_df):
+def crossref_to_db(login_data, source_df):
     cnt = 0  # count data
     invalid_rows = 0  # count non-parsable rows
 
     try:
-        conn = psycopg2.connect(dbname=args[0], user=args[1], host=args[2], password=args[3])
+        conn = psycopg2.connect(dbname=login_data[0], user=login_data[1], host=login_data[2], password=login_data[3])
     except psycopg2.Error as e:
         print "Unable to connect!"
         print e
