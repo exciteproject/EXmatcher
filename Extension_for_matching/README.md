@@ -1,53 +1,61 @@
 # Crossref_extension_for_matching
 
-This repository is created to match extracted references, which are not matched with the [main-approach](https://github.com/exciteproject/EXMATCHER), using the Crossref API.
+This code is for matching non-source references, which could not be matched with the [main-approach](https://github.com/exciteproject/EXMATCHER), using the Crossref API.
 
-This procedure consists of four steps. Each step is implemented in a separate Python module.
-1. Join records from segments of references from multiple PSQL tables into one, call Crossref API and save results to PSQL. 
-2. Compare the similarity of Crossref results with the references from the first step. 
-3. Extract key fields (e.g. author, author + title, title + journal) from a csv, which achieved a certain precision/recall/f-measure. 
-4. Compare results from (2.) with key fields from (3.). If the features of record from the second step match a list of key fields, save the record and the key fields it matched in a PSQL table.
+This procedure consists of four steps.
+1. Join segments of references from multiple PostgreSQL tables into one table, call Crossref API for each reference and save the top result to PostgreSQL.
+2. Compare the similarity of each Crossref API result with the corresponding reference from the first step and save results, either as Boolean values or with a similarity score, to PostgreSQL.
+3. Extract key field combinations (e.g. author, author + title, title + journal), as features, from a CSV file. The key field combinations are filtered by a given precision/ recall/ f-measure threshold.
+4. Match the output of the similarity comparison of the second step, with the extracted feature combinations of the third step. For each record, check if there is at least one feature combination, where all fields of the record are true. Save the id of the record and the feature combination, it matched with, in a PostgreSQL table.
 
 -----
 ### First module: crossref_api_not_match.py
-Prepares PSQL data containg non-matched sowiport records, calls Crossref API for each record and save top result in a PSQL table.
+Joins PostgreSQL tables containing segments of not-matched, non-source references, calls Crossref API for each record and saves the top result in a PostgreSQL table.
 
 #### Usage:
-First edit line 105 in crossref_api_not_match.py and insert a valid e-mail address for the Crossref API. You also need login credentials for the  Postgres database and put it in a list as shown below. After that, the code can be used:
-```
+You need login credentials for the PostgreSQL database, as well as a legit E-Mail address for the Crossref API.
+```python
 import crossref_api_not_match crm
 
-# login credentials
+# PSQL login credentials
 psql_login_data = ["database", "username", "host", "password"]
 
-# Joins multiple PSQL tables on ref_id
+# E-Mail address for crossref
+e_mail_address= "adress@email.com"
+
+# chunk size
+crossref_chunk_size = 250      
+
+# Join multiple PSQL tables on ref_id
 crm.join_tables(psql_login_data)
 
-# reads from joined table, in chunks, calls Crossref API with each chunk and saves Crossref results as JSON to PSQL. Chunk size (second parameter) can be adjusted, if desired.
-crm.crossref_via_database(psql_login_data, 250)
+# reads from joined table, in chunks, calls Crossref API with each chunk and saves API results as JSON to PostgreSQL.
+crm.crossref_via_database(psql_login_data, e_mail_address, crossref_chunk_size)
 ```
 
 -----
 ### Second module: calculate_crossref_bibtex_similarity.py
-Calculates the similarity of the Crossref API records from the first module with their corresponding input records. Compares similarity of: Author, title, DOI, Year, Journal, Pages, Volume. Results are saved in a PSQL table with boolean value, if a field is a match or not.
+This module calculates the similarity of the Crossref API results with the corresponding input references, from the first module.</br> Compares similarity of author, title, DOI, year, journal, pages, volumes.</br>Results are saved in a PostgreSQL table all compared fields and the corresponding boolean values (and similarity scores) of the matching.
 
 
 #### Usage
-Import module and call function _calculate_similarity()_. Function compares similarity for n records from database.
-First parameter is a list with PSQL login credentials.
-second parameter defines chunk size. Default = 25000.   
-```
+Import module and call function *calculate_similarity()*.
+```python
 import calculate_crossref_bibtex_similarity as crsim
 
-# login credentials
+# login data - needs to be changed with correct lgoin credentials  
 psql_login_data = ["database", "username", "host", "password"]
-crsim.calculate_similarity(psql_login_data, 50000)
-"""
-```
 
+# chunk size
+compare_chunk_size = 50000
+
+# Call function with login credentials. Seocn dparamete defines chunk size.
+crsim.calculate_similarity(psql_login_data, compare_chunk_size)
+```
 -----
 ### Third module: shrink_query_table.py
-This module reads a csv file containing recall and precision for a combination of queries, calculates f-measure and shrinks table by chosen measurement and threshold. Results are saved in a PSQL table. After shrinking, duplicate queries, e.g. queries which are already part of a larger query, are removed.   
+This module reads a CSV file, containing recall and precision of different key field combinations, calculates f-measure and extracts key field combinations by recall / precision / f-measure and given threshold. After extracting, duplicate key field combinations, e.g. key field combinations, which are part of a larger combination, are removed.
+Results are used as features in the next step and saved in a PostgreSQL table.
 
 Snippet of csv:
 
@@ -62,16 +70,11 @@ Snippet of csv:
 Import module and pandas. Read csv into Pandas dataframe and call *shrink_table()*
 as shown below.
 
-***shrink_table()*** parameters:
-
-*First*:  pandas dataframe containing csv data.
-
-*Second*: PSQL login data
-
-*Third*: Chose measurement. 'p' = Precision, 'r' = Recall, 'f' = F-measure.
-
-*Fourth*: Threshold between 0 - 1.0
-```
+*First parameter*:    pandas dataframe containing csv data.<br/>
+*Second parameter*:   PSQL login data <br/>
+*Third parameter*:    Measurement. 'p' = Precision, 'r' = Recall, 'f' = F-measure. <br/>
+*Fourth parameter*:   Threshold value between 0 and 1
+```python
 import shrink_query_table as stbl
 import pandas as pd
 
@@ -87,18 +90,20 @@ stbl.shrink_table(csv_data, psql_login_data, 'p', 0.9)
 
 -----
 ### Fourth module: compare_matches_with_queries.py
-Compares the results of similarity between sowiport and crossref references, from the second module, with the retrieved queries of the third module. For each reference, the module checks if there is at least one query, where all fields of the reference are true for each field in the query. The comparison runs in chunks, whose size can be set as a parameter. Results are saved in a PSQL table containing *ref_id* of the reference and what query it matched.   
-
+Compares the output of the second module, with the retrieved features of the third module. For each record, the module checks if there is at least one feature combination, where all fields  of the record are true. The comparison runs in chunks, whose size can be set as a parameter. Results, containing the *id* of the reference and what features it matched, are saved in a PostgreSQL table.   
 
 #### Usage
-Import and run code as shown below.  
+Run code as shown below.  
 
-*First* parameter of the function is the PSQL login data. *SEcond* parameter is the number of records in a chunk.
-```
+```python
 import compare_matches_with_queries as cmpq
 
 # psql login data
 psql_login_data = ["database", "username", "host", "password"]
-# first parameter
-cmpq.match_query_with_results(psql_login_data, 25000)
+
+# chunk size
+chunk_size = 25000
+
+# match records with key field combinations.
+cmpq.match_query_with_results(psql_login_data, chunk_size)
 ```
