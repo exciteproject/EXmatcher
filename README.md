@@ -1,4 +1,4 @@
-# EXCITE Citation Matching (EXMATCHER)
+# EXCITE Citation Matching (EXMATCHER):
 
 ## General:
 This code is dedicated to the task of citation matching in [EXCITE](https://west.uni-koblenz.de/en/research/excite).
@@ -19,6 +19,8 @@ In the final step, a trained classifier (SVM or RFC) will be applied on the extr
 At first, please edit "configfile.json" file to define SOLR link and PSQl credential. After that, the code is ready to use. In the following, you can find that how "EXMATCHER" can be used:
 
 ```python
+#python 3.5
+
 from 1_fiitabels import fill_tables_for_refiddict_refid_match
 from 2_remove_dublicate import remove_dublicate
 from 4_final_result_match import final_result
@@ -34,8 +36,8 @@ remove_dublicate()
 # apply classifier on the retrieved items
 final_result()
 ```
-## Training New Models
-### Feature extractions and data preparation
+## Training New Models:
+### Feature extractions and data preparation:
 The following code calls SOLR api for each reference in gold standard and after that extract features out of retrieved items and references: 
 ```python
 from 3_1_features_extraction_for_train_model import featuers_labels_generator_for_training
@@ -44,7 +46,7 @@ featuers_labels_generator_for_training()
 ```
 The code saves a csv file for training a model. The file contains three columns: 1- ref_id, 2-feature, and 3. lable (match/not match)
 
-### Train model 
+### Train model: 
 #### SVM
 ```python
 from 3_2_train_model import train_model
