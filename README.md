@@ -58,3 +58,6 @@ train_model("svm")
 from 3_2_train_model import train_model
 train_model("rfc")
 ```
+## Crossref extension:
+Please find the readme about the Crossref extension in the following link:
+https://github.com/exciteproject/EXmatcher/tree/master/Extension_for_matching
